@@ -1,0 +1,35 @@
+####Steps to run the spring boot application#####
+
+Step1:- Create schema codedecode in mysql
+
+Step2:- create table enewspaper-->
+
+CREATE TABLE enewspaper (
+uploadtime varchar(255),
+filename varchar(255),
+newspaperName varchar(255),
+width int,
+height int,
+dpi int);
+
+Step3:- Update the below properties in application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/<schema-name>
+spring.datasource.username=<username>
+spring.datasource.password=<password>
+
+Step4:- Run the springboot application on eclipse
+
+Expected results are in json  format which will be exposed to the front-end team to refer the data and display in the GUI as tabular format.
+
+
+
+#######Docker Steps#####
+
+
+
+Step 1: Run command from the project directory codingtask
+docker build -t spring-boot-docker.jar .
+
+Step 2: Run the below command to start the image
+docker run -p 9090:8080 spring-boot-docker.jar
+
