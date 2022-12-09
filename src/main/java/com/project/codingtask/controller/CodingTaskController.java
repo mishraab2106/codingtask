@@ -14,6 +14,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.project.codingtask.entity.DbModel;
 import com.project.codingtask.model.EpaperRequest;
 import com.project.codingtask.repos.DbRepository;
+import com.project.codingtask.service.ENewspaperService;
 
 
 
@@ -40,6 +42,8 @@ public class CodingTaskController {
 private DbRepository repo;
 @Autowired
 private DbModel model;
+@Autowired
+private ENewspaperService service;
 
 
 @PostMapping(value="/papers",produces = {"application/json"})
@@ -57,13 +61,14 @@ List<DbModel> epaper(@RequestBody EpaperRequest ePaperRequest) {
 }
 @GetMapping(value="/papers/{field}",produces = {"application/json"})
 List<DbModel> epaper1(@PathVariable String field){
-	return repo.findAll(Sort.by(field));
+	return service.sortingWithField(field);
 }
 
-@GetMapping(value="/papers/{offset}/{pagesize}",produces = {"application/json"})
-List<DbModel> epaper1(@PathVariable int offset,@PathVariable int pagesize){
-	List<DbModel> paper= (List<DbModel>) repo.findAll(PageRequest.of(offset, pagesize));
-	 return paper;
+@GetMapping(value="/papers/{field}/{offset}/{pagesize}",produces = {"application/json"})
+Page<DbModel> epaper1(@PathVariable int offset,@PathVariable int pagesize,@PathVariable String field){
+//	List<DbModel> paper= (List<DbModel>) repo.findAll(PageRequest.of(offset, pagesize));
+	return service.pagingWithField(offset,pagesize,field);
+	// return paper;
 }
 
 
