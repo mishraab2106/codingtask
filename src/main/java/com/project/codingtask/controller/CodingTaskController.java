@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLInputFactory;
@@ -47,7 +48,7 @@ private ENewspaperService service;
 
 
 @PostMapping(value="/papers",produces = {"application/json"})
-List<DbModel> epaper(@RequestBody EpaperRequest ePaperRequest) {
+List<DbModel> epaper(@Valid @RequestBody EpaperRequest ePaperRequest) {
 
 	model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
 	model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
