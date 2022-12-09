@@ -43,14 +43,8 @@ private DbModel model;
 
 
 @GetMapping(value="/papers",produces = {"application/json"})
-List<DbModel> epaper() throws XMLStreamException,IOException{
-	InputStream xmlResource=CodingTaskController.class.getClassLoader().getResourceAsStream("epaper.xml");
-	XMLInputFactory xmlInputFactory=XMLInputFactory.newFactory();
-	XMLStreamReader xmlStreamReader=xmlInputFactory.createXMLStreamReader(xmlResource);
-	
-	XmlMapper mapper=new XmlMapper();
-	EpaperRequest ePaperRequest=mapper.readValue(xmlStreamReader, EpaperRequest.class);
-	
+List<DbModel> epaper(@RequestBody EpaperRequest ePaperRequest) {
+
 	model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
 	model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
 	model.setWidth(ePaperRequest.getDeviceInfo().getScreenInfo().getWidth());
