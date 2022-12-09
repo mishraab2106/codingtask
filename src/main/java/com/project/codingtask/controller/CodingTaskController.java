@@ -42,7 +42,7 @@ private DbRepository repo;
 private DbModel model;
 
 
-@GetMapping(value="/papers",produces = {"application/json"})
+@PostMapping(value="/papers",produces = {"application/json"})
 List<DbModel> epaper(@RequestBody EpaperRequest ePaperRequest) {
 
 	model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
