@@ -16,6 +16,7 @@ public class DeviceInfo {
 @NotEmpty
 private String name;
 @JacksonXmlProperty(isAttribute= true)
+@NotEmpty
 @Email
 private String id;
 @Valid
