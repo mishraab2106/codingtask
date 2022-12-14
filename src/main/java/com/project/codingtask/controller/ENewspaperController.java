@@ -74,10 +74,4 @@ List<ENewspaperModel> epaper1(@RequestParam(value="offset") int offset,@RequestP
 	return service.pagingWithField(offset,pagesize,sort).getContent();
 }
 
-
-
-
-
-
-
 }
