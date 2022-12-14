@@ -23,12 +23,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.project.codingtask.entity.DbModel;
+import com.project.codingtask.entity.ENewspaperModel;
 import com.project.codingtask.model.EpaperRequest;
 import com.project.codingtask.repos.DbRepository;
 import com.project.codingtask.service.ENewspaperService;
@@ -37,40 +38,42 @@ import com.project.codingtask.service.ENewspaperService;
 
 
 @RestController
-public class CodingTaskController {
+public class ENewspaperController {
 
 @Autowired
-private DbRepository repo;
-@Autowired
-private DbModel model;
+private ENewspaperModel model;
 @Autowired
 private ENewspaperService service;
 
 
-@PostMapping(value="/papers",produces = {"application/json"})
-List<DbModel> epaper(@Valid @RequestBody EpaperRequest ePaperRequest) {
+@GetMapping(value="/allpapers",produces = {"application/json"})
+List<ENewspaperModel> epaper1(){
+return service.findAll();																																																																																															
+}
+
+@PostMapping(value="/addpapers", consumes="application/xml")
+String  epaper(@Valid @RequestBody EpaperRequest ePaperRequest) {
 
 	model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
 	model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
 	model.setWidth(ePaperRequest.getDeviceInfo().getScreenInfo().getWidth());
 	model.setUploadtime(LocalTime.now().toString());
 	model.setFilename("epaper.xml" +"-"+LocalTime.now());
-	model.setNewspapername(ePaperRequest.getDeviceInfo().getAppInfo().getNewspaperName());
-	System.out.println(LocalTime.now());
-	repo.save(model);
-	return repo.findAll();
+	model.setNewspapername(ePaperRequest.getDeviceInfo().getAppInfo().getNewspaperName());																																				
+	service.addPapers(model);
+	return "Data has been saved successfully";
 }
-@GetMapping(value="/papers/{field}",produces = {"application/json"})
-List<DbModel> epaper1(@PathVariable String field){
-	return service.sortingWithField(field);
+@GetMapping(value="/sortpapers",produces = {"application/json"})
+List<ENewspaperModel> epaper1(@RequestParam(value="width") String width){
+	System.out.println(width);
+	return service.sortingWithField(width);																																																																																															
 }
 
-@GetMapping(value="/papers/{field}/{offset}/{pagesize}",produces = {"application/json"})
-Page<DbModel> epaper1(@PathVariable int offset,@PathVariable int pagesize,@PathVariable String field){
-//	List<DbModel> paper= (List<DbModel>) repo.findAll(PageRequest.of(offset, pagesize));
-	return service.pagingWithField(offset,pagesize,field);
-	// return paper;
+@GetMapping(value="/papers",produces = {"application/json"})
+List<ENewspaperModel> epaper1(@RequestParam(value="offset") int offset,@RequestParam(value="pagesize") int pagesize,@RequestParam(value="sort")  String sort){
+	return service.pagingWithField(offset,pagesize,sort).getContent();
 }
+
 
 
 

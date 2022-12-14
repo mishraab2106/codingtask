@@ -11,9 +11,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.project.codingtask.entity.DbModel;
+import com.project.codingtask.entity.ENewspaperModel;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptions {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
