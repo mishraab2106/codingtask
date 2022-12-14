@@ -70,7 +70,7 @@ List<ENewspaperModel> epaper1(@RequestParam(value="width") String width){
 }
 
 @GetMapping(value="/papers",produces = {"application/json"})
-List<ENewspaperModel> epaper1(@RequestParam(value="offset") int offset,@RequestParam(value="pagesize") int pagesize,@RequestParam(value="sort")  String sort){
+List<ENewspaperModel> epaper1(@RequestParam(value="offset",defaultValue="0") int offset,@RequestParam(value="pagesize",defaultValue="5") int pagesize,@RequestParam(value="sort",defaultValue="newspapername")  String sort){
 	return service.pagingWithField(offset,pagesize,sort).getContent();
 }
 

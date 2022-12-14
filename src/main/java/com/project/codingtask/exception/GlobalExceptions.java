@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.codingtask.entity.ENewspaperModel;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptions {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
