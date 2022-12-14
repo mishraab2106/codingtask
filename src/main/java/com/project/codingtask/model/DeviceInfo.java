@@ -1,17 +1,30 @@
 package com.project.codingtask.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 
 public class DeviceInfo {
 
 @JacksonXmlProperty(isAttribute= true)
+@NotEmpty
 private String name;
 @JacksonXmlProperty(isAttribute= true)
+@NotEmpty
+@Email
 private String id;
-
+@Valid
 private ScreenInfo screenInfo;
+
+@Valid
 private OsInfo osInfo;
+@Valid
 private AppInfo appInfo;
 public String getName() {
 	return name;

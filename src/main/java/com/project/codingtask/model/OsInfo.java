@@ -1,11 +1,15 @@
 package com.project.codingtask.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class OsInfo {
 	@JacksonXmlProperty(isAttribute= true)
+	@NotEmpty
 	private String name;
 	@JacksonXmlProperty(isAttribute= true)
+//	@NotEmpty
 	private double version;
 	public String getName() {
 		return name;

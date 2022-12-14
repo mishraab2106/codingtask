@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name="ENewspaper")
-public class DbModel {
+public class ENewspaperModel {
 
 
 

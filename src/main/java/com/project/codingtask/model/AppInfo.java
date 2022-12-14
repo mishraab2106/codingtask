@@ -1,8 +1,13 @@
 package com.project.codingtask.model;
 
-public class AppInfo {
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class AppInfo {
+	@NotEmpty
 	private String newspaperName;
+@NotNull
 	private double version;
 	public String getNewspaperName() {
 		return newspaperName;
