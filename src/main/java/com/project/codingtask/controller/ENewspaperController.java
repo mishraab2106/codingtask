@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.xml.parsers.DocumentBuilder;
@@ -34,9 +35,6 @@ import com.project.codingtask.model.EpaperRequest;
 import com.project.codingtask.repos.DbRepository;
 import com.project.codingtask.service.ENewspaperService;
 
-
-
-
 @RestController
 public class ENewspaperController {
 
@@ -47,31 +45,56 @@ private ENewspaperService service;
 
 
 @GetMapping(value="/allpapers",produces = {"application/json"})
-List<ENewspaperModel> epaper1(){
-return service.findAll();																																																																																															
-}
+   List<ENewspaperModel> epaper1(){
+      return service.findAll();																																																																																															
+  }
 
 @PostMapping(value="/addpapers", consumes="application/xml")
-String  epaper(@Valid @RequestBody EpaperRequest ePaperRequest) {
+       String  epaper(@Valid @RequestBody EpaperRequest ePaperRequest) 
+  {
 
-	model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
-	model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
-	model.setWidth(ePaperRequest.getDeviceInfo().getScreenInfo().getWidth());
-	model.setUploadtime(LocalTime.now().toString());
-	model.setFilename("epaper.xml" +"-"+LocalTime.now());
-	model.setNewspapername(ePaperRequest.getDeviceInfo().getAppInfo().getNewspaperName());																																				
-	service.addPapers(model);
-	return "Data has been saved successfully";
-}
-@GetMapping(value="/sortpapers",produces = {"application/json"})
-List<ENewspaperModel> epaper1(@RequestParam(value="width") String width){
-	System.out.println(width);
-	return service.sortingWithField(width);																																																																																															
-}
+	 model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
+	 model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
+	 model.setWidth(ePaperRequest.getDeviceInfo().getScreenInfo().getWidth());
+	 model.setUploadtime(LocalTime.now().toString());
+	 model.setFilename("epaper.xml" +"-"+LocalTime.now());
+	 model.setNewspapername(ePaperRequest.getDeviceInfo().getAppInfo().getNewspaperName());																																				
+	 service.addPapers(model);
+	 return "Data has been saved successfully";
+  }
+@GetMapping(value="/filtersortpapers",produces = {"application/json"})
+  List<ENewspaperModel> epaper2(@RequestParam(value="sort_by",defaultValue="uploadtime") String sort,
+		@RequestParam(value="filename",defaultValue="") String filename,
+		@RequestParam(value="height",defaultValue="") String height,
+		@RequestParam(value="width",defaultValue="") String width, 
+		@RequestParam(value="newspapername",defaultValue="") 
+        String newspapername,@RequestParam(value="offset",defaultValue="0") int offset,
+        @RequestParam(value="pagesize",defaultValue="10") int pagesize,
+        @RequestParam(value="dpi",defaultValue="") Integer dpi,
+        @RequestParam(value="uploadtime",defaultValue="") String uploadtime)
 
-@GetMapping(value="/papers",produces = {"application/json"})
-List<ENewspaperModel> epaper1(@RequestParam(value="offset",defaultValue="0") int offset,@RequestParam(value="pagesize",defaultValue="5") int pagesize,@RequestParam(value="sort",defaultValue="newspapername")  String sort){
-	return service.pagingWithField(offset,pagesize,sort).getContent();
-}
 
-}
+  {
+	  if(!newspapername.equals("")) {
+		System.out.println("In the first loop");
+		return service.newspaperfilterWithPagination(newspapername,offset,pagesize,sort);
+   }
+	  else if(!filename.equals("")) {
+		System.out.println("In the Second loop");
+		return service.filenamefilterWithPagination(filename,offset,pagesize,sort);
+   }
+	  else if(!width.equals("")) {
+		int width1=Integer.parseInt(width); 
+		return service.widthfilterWithPagination(width1,offset,pagesize,sort);
+   }
+	  else if(!height.equals(""))
+   {    int height1=Integer.parseInt(height);
+        return service.heightfilterWithPagination(height1,offset,pagesize,sort);	
+   }  else if(dpi!=null) 
+   {
+	    return service.dpifilterWithPagination(dpi,offset,pagesize,sort);
+   }  else 
+	   
+	     return service.uploadtimefilterWithPagination(uploadtime, offset, pagesize, sort);
+   }
+   }
