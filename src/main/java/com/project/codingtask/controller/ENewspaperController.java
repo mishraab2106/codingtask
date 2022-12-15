@@ -96,8 +96,7 @@ private ENewspaperService service;
    }  else if(dpi!=null) 
    {
 	    return service.dpifilterWithPagination(dpi,offset,pagesize,sort);
-   }  else 
-	   
+   }  else 	   
 	     return service.uploadtimefilterWithPagination(uploadtime, offset, pagesize, sort);
    }
    }
