@@ -28,8 +28,13 @@ private DbRepository repo;
 private SpringJdbc springjdbc;
 
 public Page<ENewspaperModel> sortingWithPagination(int offset, int pagesize, String sortby) {
-Page<ENewspaperModel> newspaper=repo.findAll(PageRequest.of(offset, pagesize).withSort(Sort.by(sortby)));
-return newspaper;
+    Page<ENewspaperModel> newspaper=repo.findAll(PageRequest.of(offset, pagesize).withSort(Sort.by(sortby)));
+    return newspaper;
+}
+
+public void deletepaper(Long id) {
+	// repo.deletepaperById(id);
+	repo.deleteById(id);
 }
 
 public List<ENewspaperModel> findAll() {

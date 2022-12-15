@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,22 +49,26 @@ private ENewspaperService service;
    List<ENewspaperModel> epaper1(){
       return service.findAll();																																																																																															
   }
-
 @PostMapping(value="/addpapers", consumes="application/xml")
        String  epaper(@Valid @RequestBody EpaperRequest ePaperRequest) 
   {
-
 	 model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
 	 model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
 	 model.setWidth(ePaperRequest.getDeviceInfo().getScreenInfo().getWidth());
-	 model.setUploadtime(LocalTime.now().toString());
-	 model.setFilename("epaper.xml" +"-"+LocalTime.now());
+	 model.setUploadtime(LocalTime.now().toString().substring(0,8));
+	 model.setFilename("epaper.xml" +"-"+LocalTime.now().toString().substring(0,8));
 	 model.setNewspapername(ePaperRequest.getDeviceInfo().getAppInfo().getNewspaperName());																																				
 	 service.addPapers(model);
 	 return "Data has been saved successfully";
   }
+
+@DeleteMapping("/deletepapers")
+  public String deleterecipe(@RequestParam Long id) {
+	  service.deletepaper(id);
+	  return "Deleted enewspaper with id " +id;	
+}
 @GetMapping(value="/filtersortpapers",produces = {"application/json"})
-  List<ENewspaperModel> epaper2(@RequestParam(value="sort_by",defaultValue="uploadtime") String sort,
+  List<ENewspaperModel> filtersortpapers(@RequestParam(value="sort_by",defaultValue="uploadtime") String sort,
 		@RequestParam(value="filename",defaultValue="") String filename,
 		@RequestParam(value="height",defaultValue="") String height,
 		@RequestParam(value="width",defaultValue="") String width, 
@@ -76,11 +81,9 @@ private ENewspaperService service;
 
   {
 	  if(!newspapername.equals("")) {
-		System.out.println("In the first loop");
 		return service.newspaperfilterWithPagination(newspapername,offset,pagesize,sort);
    }
 	  else if(!filename.equals("")) {
-		System.out.println("In the Second loop");
 		return service.filenamefilterWithPagination(filename,offset,pagesize,sort);
    }
 	  else if(!width.equals("")) {

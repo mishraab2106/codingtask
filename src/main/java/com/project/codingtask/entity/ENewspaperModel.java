@@ -15,17 +15,19 @@ import org.springframework.stereotype.Component;
 @Table(name="ENewspaper")
 public class ENewspaperModel {
 
-
-
 @Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private long id;
+
 @Column(name="uploadtime")
 private String uploadtime;
  
-
 @Column(name="width")
 private int width;
+
 @Column(name="height")
 private int height;
+
 @Column(name="dpi")
 private int dpi;
 
@@ -34,10 +36,6 @@ private String newspapername;
 
 @Column(name="filename")
 private String filename;
-
-
-
-
 
 public int getWidth() {
 	return width;
@@ -57,10 +55,6 @@ public int getDpi() {
 public void setDpi(int dpi) {
 	this.dpi = dpi;
 }
-
-
-
-
 public String getUploadtime() {
 	return uploadtime;
 }
@@ -79,6 +73,5 @@ public String getFilename() {
 public void setFilename(String filename) {
 	this.filename = filename;
 }
-
 	
 }

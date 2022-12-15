@@ -1,4 +1,5 @@
 CREATE TABLE enewspaper (
+id INT,
 uploadtime varchar(255),
 filename varchar(255),
 newspaperName varchar(255),
