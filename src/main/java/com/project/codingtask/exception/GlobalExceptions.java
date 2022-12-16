@@ -3,6 +3,7 @@ package com.project.codingtask.exception;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,6 +32,12 @@ public class GlobalExceptions {
 	public ResponseEntity<String> generalException(Exception ex){
 
 		return new ResponseEntity<String>("Please check the data provided",HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(EmptyResultDataAccessException.class)
+	public ResponseEntity<String> dataNotFoundException(EmptyResultDataAccessException ex){
+
+		return new ResponseEntity<String>("Please check the id provided",HttpStatus.BAD_REQUEST);
 	}
 
 }
