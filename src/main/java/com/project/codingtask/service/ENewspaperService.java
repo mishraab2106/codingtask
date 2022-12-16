@@ -41,7 +41,7 @@ public void  addPapers(ENewspaperModel model) {
 
 public List<ENewspaperModel> newspaperfilterWithPagination(String newspapername,int offset,int pagesize,String sortby)
 {
-	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));;
+	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby).ascending());;
 	return repo.findBynewspapernameContainingIgnoreCase(newspapername, pageable).getContent();	
 }
 
@@ -57,12 +57,12 @@ public List<ENewspaperModel> dpifilterWithPagination(int dpi, int offset, int pa
 }
 
 public List<ENewspaperModel> filenamefilterWithPagination(String filename, int offset, int pagesize,String sortby) {
-	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));
+	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby).ascending());
 	return repo.findByfilenameContainingIgnoreCase(filename, pageable).getContent();
 }
 
 public List<ENewspaperModel> uploadtimefilterWithPagination(String uploadtime, int offset, int pagesize,String sortby) {
-	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));
+	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby).ascending());
 	return repo.findByuploadtimeContainingIgnoreCase(uploadtime, pageable).getContent();
 }
 
