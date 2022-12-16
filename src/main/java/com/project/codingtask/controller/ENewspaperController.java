@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ import org.w3c.dom.Document;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.project.codingtask.entity.ENewspaperModel;
 import com.project.codingtask.model.EpaperRequest;
-import com.project.codingtask.repos.DbRepository;
+import com.project.codingtask.repos.ENewspaperDataRepository;
 import com.project.codingtask.service.ENewspaperService;
 
 @RestController
@@ -46,7 +47,7 @@ private ENewspaperService service;
 
 
 @GetMapping(value="/allpapers",produces = {"application/json"})
-   List<ENewspaperModel> epaper1(){
+   List<ENewspaperModel> allpapers(){
       return service.findAll();																																																																																															
   }
 @PostMapping(value="/addpapers", consumes="application/xml")
@@ -61,7 +62,6 @@ private ENewspaperService service;
 	 service.addPapers(model);
 	 return "Data has been saved successfully";
   }
-
 @DeleteMapping("/deletepapers")
   public String deletepaper(@RequestParam Long id) {
 	  service.deletepaper(id);

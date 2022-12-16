@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction;
 import com.project.codingtask.entity.ENewspaperModel;
-import com.project.codingtask.repos.DbRepository;
-import com.project.codingtask.repos.SpringJdbc;
+import com.project.codingtask.repos.ENewspaperDataRepository;
+import com.project.codingtask.repos.ENewspaperSpringRepository;
 
 @Service
 public class ENewspaperService {
@@ -23,9 +23,9 @@ public class ENewspaperService {
 @Autowired
 private ENewspaperModel model;
 @Autowired
-private DbRepository repo;
+private ENewspaperDataRepository repo;
 @Autowired
-private SpringJdbc springjdbc;
+private ENewspaperSpringRepository springjdbc;
 
 public void deletepaper(Long id) {
 	repo.deleteById(id);
@@ -65,4 +65,6 @@ public List<ENewspaperModel> uploadtimefilterWithPagination(String uploadtime, i
 	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));
 	return repo.findByuploadtimeContainingIgnoreCase(uploadtime, pageable).getContent();
 }
+
+
 }

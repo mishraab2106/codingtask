@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.project.codingtask.entity.ENewspaperModel;
 
 @Repository
-public class SpringJdbc {
+public class ENewspaperSpringRepository {
 	
 	@Autowired
 	private JdbcTemplate springJdbcTemplate;

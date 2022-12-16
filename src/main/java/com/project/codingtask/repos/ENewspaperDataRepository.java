@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.project.codingtask.entity.ENewspaperModel;
 
 @Repository
-public interface DbRepository extends JpaRepository<ENewspaperModel,Long> {
+public interface ENewspaperDataRepository extends JpaRepository<ENewspaperModel,Long> {
 	
 Page<ENewspaperModel> findBynewspapernameContainingIgnoreCase(String newspapername, Pageable pageable);
 
