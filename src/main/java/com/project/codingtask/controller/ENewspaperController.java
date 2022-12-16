@@ -50,7 +50,7 @@ private ENewspaperService service;
       return service.findAll();																																																																																															
   }
 @PostMapping(value="/addpapers", consumes="application/xml")
-       String  epaper(@Valid @RequestBody EpaperRequest ePaperRequest) 
+       String  addpaper(@Valid @RequestBody EpaperRequest ePaperRequest) 
   {
 	 model.setDpi(ePaperRequest.getDeviceInfo().getScreenInfo().getDpi());
 	 model.setHeight(ePaperRequest.getDeviceInfo().getScreenInfo().getHeight());
@@ -63,7 +63,7 @@ private ENewspaperService service;
   }
 
 @DeleteMapping("/deletepapers")
-  public String deleterecipe(@RequestParam Long id) {
+  public String deletepaper(@RequestParam Long id) {
 	  service.deletepaper(id);
 	  return "Deleted enewspaper with id " +id;	
 }

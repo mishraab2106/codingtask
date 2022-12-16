@@ -27,13 +27,7 @@ private DbRepository repo;
 @Autowired
 private SpringJdbc springjdbc;
 
-public Page<ENewspaperModel> sortingWithPagination(int offset, int pagesize, String sortby) {
-    Page<ENewspaperModel> newspaper=repo.findAll(PageRequest.of(offset, pagesize).withSort(Sort.by(sortby)));
-    return newspaper;
-}
-
 public void deletepaper(Long id) {
-	// repo.deletepaperById(id);
 	repo.deleteById(id);
 }
 
@@ -52,8 +46,7 @@ public List<ENewspaperModel> newspaperfilterWithPagination(String newspapername,
 }
 
 public List<ENewspaperModel> heightfilterWithPagination(int height, int offset, int pagesize,String sortby ) {
-	return springjdbc.findByheightContaining(height, offset, pagesize, sortby);
-	
+	return springjdbc.findByheightContaining(height, offset, pagesize, sortby);	
 }
 
 public List<ENewspaperModel> widthfilterWithPagination(int width, int offset, int pagesize,String sortby) {
@@ -67,6 +60,7 @@ public List<ENewspaperModel> filenamefilterWithPagination(String filename, int o
 	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));
 	return repo.findByfilenameContainingIgnoreCase(filename, pageable).getContent();
 }
+
 public List<ENewspaperModel> uploadtimefilterWithPagination(String uploadtime, int offset, int pagesize,String sortby) {
 	Pageable pageable = PageRequest.of(offset, pagesize).withSort(Sort.by(sortby));
 	return repo.findByuploadtimeContainingIgnoreCase(uploadtime, pageable).getContent();

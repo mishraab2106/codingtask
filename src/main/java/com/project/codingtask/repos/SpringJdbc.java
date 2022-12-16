@@ -18,11 +18,11 @@ public class SpringJdbc {
 		 
     public  List<ENewspaperModel> findBywidthContaining(int width,int offset,int pagesize,
     		                                            String sort)
-    {
+{
     	
     	String WIDTH_QUERY="select * from enewspaper where width like '%"+width+"%' order by "+sort+" offset "+offset+" rows fetch next "+pagesize+" rows only" ;
     	return springJdbcTemplate.query(WIDTH_QUERY, new BeanPropertyRowMapper<>(ENewspaperModel.class));
-    }
+}
     public  List<ENewspaperModel> findByheightContaining(int height,int offset,int pagesize,
             String sort){
 
